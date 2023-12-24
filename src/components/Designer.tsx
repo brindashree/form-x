@@ -19,7 +19,8 @@ import { Button } from "./ui/button";
 import { BiSolidTrash } from "react-icons/bi";
 
 const Designer = () => {
-  const { elements, addElement } = useDesigner();
+  const { elements, addElement, selectedElement, setSelectedElement } =
+    useDesigner();
 
   const droppable = useDroppable({
     id: "designer-drop-area",
@@ -44,7 +45,12 @@ const Designer = () => {
   });
   return (
     <div className="flex w-full h-full">
-      <div className="p-4 w-full">
+      <div
+        className="p-4 w-full"
+        onClick={() => {
+          if (selectedElement) setSelectedElement(null);
+        }}
+      >
         <div
           ref={droppable.setNodeRef}
           className={cn(
@@ -57,7 +63,7 @@ const Designer = () => {
               Drop here
             </p>
           )}
-          {droppable.isOver && (
+          {droppable.isOver && elements.length === 0 && (
             <div className="p-4 w-full">
               <div className="h-[120px] rounded-md bg-primary/20"></div>
             </div>
@@ -77,7 +83,7 @@ const Designer = () => {
 };
 
 function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
-  const { removeElement } = useDesigner();
+  const { removeElement, setSelectedElement, selectedElement } = useDesigner();
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const topHalf = useDroppable({
     id: element.id + "--top",
@@ -95,7 +101,7 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
       isBottomHalfDesignerElement: true,
     },
   });
-  const DesignerElement = FormElements[element.type].designerComponent;
+
   const draggable = useDraggable({
     id: element.id + "-drag-handler",
     data: {
@@ -104,7 +110,8 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
       isDesignerElement: true,
     },
   });
-
+  if (draggable.isDragging) return null;
+  const DesignerElement = FormElements[element.type].designerComponent;
   return (
     <div
       ref={draggable.setNodeRef}
@@ -113,6 +120,10 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
       className="relative h-[120px] flex flex-col text-foreground hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset"
       onMouseEnter={() => setMouseIsOver(true)}
       onMouseLeave={() => setMouseIsOver(false)}
+      onClick={(e) => {
+        e.stopPropagation();
+        setSelectedElement(element);
+      }}
     >
       <div
         ref={topHalf.setNodeRef}
@@ -127,7 +138,8 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
           <div className="absolute right-0 h-full">
             <Button
               variant={"outline"}
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 removeElement(element.id);
               }}
               className="flex justify-center h-full border rounded-md rounded-l-none bg-red-500"
@@ -142,6 +154,9 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
           </div>
         </>
       )}
+      {topHalf.isOver && (
+        <div className="absolute top-0 w-full rounded-md h-[7px] bg-primary rounded-b-none"></div>
+      )}
 
       <div
         className={cn(
@@ -151,6 +166,9 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
       >
         <DesignerElement elementInstance={element} />
       </div>
+      {bottomHalf.isOver && (
+        <div className="absolute bottom-0 w-full rounded-md h-[7px] bg-primary rounded-t-none"></div>
+      )}
     </div>
   );
 }

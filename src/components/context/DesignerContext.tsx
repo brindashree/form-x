@@ -16,7 +16,7 @@ type DesignerContextType = {
   removeElement: (id: string) => void;
   selectedElement: FormElementInstance | null;
   setSelectedElement: Dispatch<SetStateAction<FormElementInstance | null>>;
-  updateElement: (id: string, element: FormElementInstance) => void;
+  updateElement: (id: string, element: FormElementInstance) => void; 
 };
 
 export const DesignerContext = createContext<DesignerContextType | null>(null);
@@ -58,7 +58,8 @@ export default function DesignerContextProvider({
         removeElement,
         selectedElement,
         setSelectedElement,
-        updateElement
+        updateElement,
+        setElements
       }}
     >
       {children}

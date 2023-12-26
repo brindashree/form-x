@@ -7,6 +7,7 @@ export type FormElementInstance = {
   type: ElementsType;
   extraAttributes?: Record<string, any>;
 };
+export type SubmitFunction = (key: string, value: string) => void;
 
 export type FormElement = {
   type: ElementsType;
@@ -23,10 +24,15 @@ export type FormElement = {
   }>;
   formComponent: React.FC<{
     elementInstance: FormElementInstance;
+    submitValue?: SubmitFunction;
+    isInvalid?: boolean;
+    defaultValue?: string;
   }>;
   propertiesComponent: React.FC<{
     elementInstance: FormElementInstance;
   }>;
+
+  validate: (formElement: FormElementInstance, currentValue: string) => boolean;
 };
 
 type FormElementsType = {

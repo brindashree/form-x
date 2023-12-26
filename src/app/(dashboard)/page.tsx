@@ -1,4 +1,4 @@
-import { GetFormState, GetForms } from "../../../actions/form";
+import { GetFormStats, GetForms } from "../../../actions/form";
 import {
   Card,
   CardContent,
@@ -47,11 +47,11 @@ export default function Home() {
 }
 
 async function CardStatsWrapper() {
-  const stats = await GetFormState();
+  const stats = await GetFormStats();
   return <StatsCards loading={false} data={stats} />;
 }
 interface StatsCardProps {
-  data?: Awaited<ReturnType<typeof GetFormState>>;
+  data?: Awaited<ReturnType<typeof GetFormStats>>;
   loading: boolean;
 }
 function StatsCards(props: StatsCardProps) {

@@ -1,10 +1,9 @@
 "use client";
+
+import { formSchema, formSchemaType } from "../../schemas/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { ImSpinner2 } from "react-icons/im";
-import { BsFileEarmarkPlus } from "react-icons/bs";
-import * as z from "zod";
-import { formSchema, formSchemaType } from "../../schemas/form";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -27,13 +26,15 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { toast } from "./ui/use-toast";
 import { CreateForm } from "../../actions/form";
+import { BsFileEarmarkPlus } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 
 function CreateFormBtn() {
   const router = useRouter();
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<formSchemaType>({
     resolver: zodResolver(formSchema),
   });
+
   async function onSubmit(values: formSchemaType) {
     try {
       const formId = await CreateForm(values);
@@ -50,6 +51,7 @@ function CreateFormBtn() {
       });
     }
   }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -102,9 +104,9 @@ function CreateFormBtn() {
         </Form>
         <DialogFooter>
           <Button
+            onClick={form.handleSubmit(onSubmit)}
             disabled={form.formState.isSubmitting}
             className="w-full mt-4"
-            onClick={form.handleSubmit(onSubmit)}
           >
             {!form.formState.isSubmitting && <span>Save</span>}
             {form.formState.isSubmitting && (

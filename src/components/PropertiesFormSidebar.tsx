@@ -17,7 +17,9 @@ function PropertiesFormSidebar() {
         <Button
           size={"icon"}
           variant={"ghost"}
-          onClick={() => setSelectedElement(null)}
+          onClick={() => {
+            setSelectedElement(null);
+          }}
         >
           <AiOutlineClose />
         </Button>

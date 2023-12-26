@@ -59,7 +59,6 @@ export default function DesignerContextProvider({
         selectedElement,
         setSelectedElement,
         updateElement,
-        setElements
       }}
     >
       {children}

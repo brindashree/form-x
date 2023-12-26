@@ -5,14 +5,14 @@ import useDesigner from "./hooks/useDesigner";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { FormElements } from "./FormElements";
 
-const PreviewDialogBtn = () => {
+function PreviewDialogBtn() {
   const { elements } = useDesigner();
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="gap-2" variant={"outline"}>
-          <MdPreview className="h-4 w-4" />
+        <Button variant={"outline"} className="gap-2">
+          <MdPreview className="h-6 w-6" />
           Preview
         </Button>
       </DialogTrigger>
@@ -27,15 +27,17 @@ const PreviewDialogBtn = () => {
         </div>
         <div className="bg-accent flex flex-col flex-grow items-center justify-center p-4 bg-[url(/paper.svg)] dark:bg-[url(/paper-dark.svg)] overflow-y-auto">
           <div className="max-w-[620px] flex flex-col gap-4 flex-grow bg-background h-full w-full rounded-2xl p-8 overflow-y-auto">
-            {elements.map((el)=>{
-              const FormComponent = FormElements[el.type].formComponent;
-              return <FormComponent key={el.id} elementInstance={el}/>
+            {elements.map((element) => {
+              const FormComponent = FormElements[element.type].formComponent;
+              return (
+                <FormComponent key={element.id} elementInstance={element} />
+              );
             })}
           </div>
         </div>
       </DialogContent>
     </Dialog>
   );
-};
+}
 
 export default PreviewDialogBtn;

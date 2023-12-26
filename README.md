@@ -18,13 +18,13 @@ Track the performance of your forms with comprehensive statistics. Form-X provid
 
 ## Tech Stack
 
-- **Next.js**: A React framework for building fast and scalable web applications.
-- **Prisma**: A modern database toolkit for PostgreSQL, allowing for efficient database operations.
-- **DnD-Kit**: A powerful, accessible, and extensible drag-and-drop library for React.
-- **PostgreSQL**: A powerful open-source relational database system.
-- **React Context**: A React feature for managing global state in your application.
-- **Shadcn UI**: A stylish and customizable UI library to enhance the visual appeal of Form-X.
-- **Clerk (Auth)**: Secure and easy authentication with Clerk for managing user authentication.
+- **Next.js**
+- **Prisma**
+- **DnD-Kit**
+- **PostgreSQL**
+- **React Context**
+- **Shadcn UI**
+- **Clerk (Auth)**
 
 
 Happy form building with Form-X! 🚀
